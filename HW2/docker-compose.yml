@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  firstapp:
+    image: joannfedion/firstapp
+    command: "java -jar /firstapp.jar --outerServer=secondapp"
+    ports:
+      - 8080:3001
+  secondapp:
+    build: secondapp/
+    command: "java -jar /secondapp.jar --outerServer=firstapp"
+    ports:
+      - 8081:3002
