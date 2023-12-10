@@ -1,0 +1,20 @@
+- name: Building App
+  hosts: building
+  tasks:
+    - name: Maven package
+      ansible.builtin.shell: mvn package
+
+- name: Coping files
+  hosts: host
+  tasks:
+    - name: Coping from building_container
+      ansible.builtin.shell: docker cp building_container:/hometask/target ./volume/
+    - name: Coping to running_container
+      ansible.builtin.shell: docker cp ./volume/ running_container:/
+
+
+- name: Running App
+  hosts: runnning
+  tasks:
+    - name: Running app
+      ansible.builtin.shell: java -jar volume/demo-0.0.1-SNAPSHOT.jar &

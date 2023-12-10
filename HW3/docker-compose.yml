@@ -1,0 +1,13 @@
+version: '3'
+services:
+  building:
+    build: BuildingContainer/
+    command: tail -F anything
+    container_name: building_container
+
+  running:
+    build: RunningContainer/
+    command: tail -F anything
+    ports:
+      - 80:3001
+    container_name: running_container
